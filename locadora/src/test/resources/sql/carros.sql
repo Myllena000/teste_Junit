@@ -1,2 +1,2 @@
-INSERT INTO carro (id, valor_diaria, modelo) VALUES (1, 170.0, 'SUV');
-INSERT INTO carro (id, valor_diaria, modelo) VALUES (2, 130.0, 'HB20');
+INSERT INTO carro (id, valor_diaria, modelo, ano) VALUES (1, 170.0, 'SUV', 2026);
+INSERT INTO carro (id, valor_diaria, modelo, ano) VALUES (2, 130.0, 'HB20', 2020);
