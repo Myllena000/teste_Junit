@@ -4,6 +4,7 @@ import com.myllena.locadora.entity.CarroEntity;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ActiveProfiles;
@@ -44,6 +45,7 @@ class CarroRepositoryTest {
 
         Assertions.assertThat(carroSalvo.isPresent());
         assertThat(carroSalvo.get().getModelo()).isEqualTo("HB20");
+
     }
 
     @Test
@@ -63,9 +65,7 @@ class CarroRepositoryTest {
 
         Optional<CarroEntity> list = repository.findById(carroEntity.getId());
         assertThat(list.isEmpty());
-
     }
-
 
     // COM SQL
     @Test
