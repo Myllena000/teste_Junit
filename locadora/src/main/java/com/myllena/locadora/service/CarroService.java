@@ -37,7 +37,7 @@ public class CarroService {
     public void deletarCarro(Long id){
         var carroExiste = repository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Carro não cadastrado"));
-         repository.deleteById(carroExiste.getId()); // ou por id da requisiçao
+         repository.deleteById(carroExiste.getId());
     }
 
     public CarroEntity buscarPorId(Long id){
