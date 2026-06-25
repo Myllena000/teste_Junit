@@ -1,4 +1,4 @@
-package com.myllena.locadora;
+package com.myllena.locadora.repository;
 
 import org.junit.jupiter.api.*;
 
