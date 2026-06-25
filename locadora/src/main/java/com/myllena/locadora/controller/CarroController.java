@@ -8,6 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
+
 
 @RestController
 @RequestMapping("carros")
@@ -32,15 +34,27 @@ public class CarroController {
         }
     }
 
+    @GetMapping
+    public ResponseEntity<List<CarroEntity>> list() {
+        try {
+            List<CarroEntity> listarTodos = service.listarTodos();
+            return ResponseEntity.ok().body(listarTodos);
+
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+
     @GetMapping("/{id}")
     public ResponseEntity<CarroEntity> buscarPorID(@PathVariable Long id) {
         try {
-            service.buscarPorId(id);
+            CarroEntity carroEncontrado = service.buscarPorId(id);
+            return ResponseEntity.ok(carroEncontrado);
 
-        } catch (Exception e) {
-            ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @PutMapping("/{id}")
@@ -59,14 +73,10 @@ public class CarroController {
         try {
             service.deletarCarro(id);
 
-
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
-
-
-
 
 }
