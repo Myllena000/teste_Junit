@@ -36,13 +36,7 @@ public class CarroController {
 
     @GetMapping
     public ResponseEntity<List<CarroEntity>> list() {
-        try {
-            List<CarroEntity> listarTodos = service.listarTodos();
-            return ResponseEntity.ok().body(listarTodos);
-
-        } catch (EntityNotFoundException e) {
-            return ResponseEntity.notFound().build();
-        }
+        return ResponseEntity.ok(service.listarTodos());
     }
 
 

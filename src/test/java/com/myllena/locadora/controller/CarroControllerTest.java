@@ -1,6 +1,7 @@
 package com.myllena.locadora.controller;
 
 import com.myllena.locadora.entity.CarroEntity;
+import com.myllena.locadora.exception.EntityNotFoundException;
 import com.myllena.locadora.service.CarroService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.MediaType;
@@ -12,6 +13,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+
+import java.util.List;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
@@ -58,10 +61,32 @@ class CarroControllerTest {
                 thenReturn(new CarroEntity(1L, "Civic", 310, 2026));
 
         mvc.perform(
-                MockMvcRequestBuilders.get("/carros/1"))
+                        MockMvcRequestBuilders.get("/carros/1"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(1L))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.modelo").value("Civic"));
+    }
+
+    @Test
+    void deveDarErroAoBuscarCarroInexistente() throws Exception {
+        Mockito.when(service.buscarPorId(Mockito.any())).thenThrow(EntityNotFoundException.class);
+
+        mvc.perform(MockMvcRequestBuilders.get("/carros/1"))
+                .andExpect(MockMvcResultMatchers.status().isNotFound());
+    }
+
+    @Test
+    void deveListarCarros() throws Exception{
+        var list = List.of(
+                new CarroEntity(1L, "HRV", 200.0, 2025),
+                new CarroEntity(2L, "GOL", 140.0, 2021)
+        );
+        Mockito.when(service.listarTodos()).thenReturn(list);
+
+        mvc.perform(MockMvcRequestBuilders.get("/carros"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].id").value(1L))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[1].ano").value(2021));
 
     }
 
