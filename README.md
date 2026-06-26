@@ -7,7 +7,7 @@ O objetivo é explorar boas práticas de testes unitários e mocking em aplicaç
 
 🔧 Tecnologias utilizadas:
 - Java 17+
--  Boot
+- Spring Boot
 - JUnit 5
 - Mockito
 - WebMvcTest
