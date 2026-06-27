@@ -55,22 +55,22 @@ public class CarroController {
     public ResponseEntity<CarroEntity> alterarCarro(@PathVariable Long id, @RequestBody CarroEntity entity) {
         try {
             service.alterarCarro(id, entity);
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 
         } catch (EntityNotFoundException e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+            return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletar(@PathVariable Long id) {
         try {
             service.deletarCarro(id);
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 
         } catch (EntityNotFoundException e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+            return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
 }
