@@ -57,6 +57,23 @@ class CarroControllerTest {
     }
 
     @Test
+    void deveDarErroAoSalvarCarro() throws Exception {
+        Mockito.when(service.salvarCarro(Mockito.any())).thenThrow(IllegalArgumentException.class);
+
+        String json = """
+                {
+                 "modelo" : "HRV",
+                "valorDiaria" : 131.0,
+                "ano" : 2009
+                }
+                """;
+        mvc.perform(MockMvcRequestBuilders.post("/carros")
+                        .contentType(String.valueOf(MediaType.APPLICATION_JSON))
+                        .content(json))
+                .andExpect(MockMvcResultMatchers.status().isBadRequest());
+    }
+
+    @Test
     void deveMostrarCarro() throws Exception {
         Mockito.when(service.buscarPorId(Mockito.any())).
                 thenReturn(new CarroEntity(1L, "Civic", 310, 2026));

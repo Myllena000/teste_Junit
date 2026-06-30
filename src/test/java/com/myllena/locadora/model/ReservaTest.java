@@ -21,7 +21,7 @@ class ReservaTest {
     }
 
     @Test
-    @Disabled // Ignora o teste
+    //@Disabled - Ignora o teste
     void deveCriarUmaReserva() {
         var dias = 5;
         var reserva = new Reserva(carro, cliente, dias);

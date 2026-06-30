@@ -28,9 +28,7 @@ public class CarroController {
             return ResponseEntity.status(HttpStatus.CREATED).body(carroSalvo);
 
         } catch (IllegalArgumentException e) {
-            return ResponseEntity
-                    .status(HttpStatus.UNPROCESSABLE_ENTITY)
-                    .body(e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }
 
